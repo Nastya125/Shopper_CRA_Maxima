@@ -14,15 +14,12 @@ function Card(props) {
     price = 20,
     rating = 5,
     title = " Card Text",
+    image = { src: card__headphons__5, alt: "card__headphons" },
   } = props;
   return (
-    <div className="tab__card card">
+    <div className="tab__card card" onClick={() => props.click()}>
       <div className={color ? "card__product " + color : "card__product green"}>
-        <img
-          className="card__img"
-          src={card__headphons__3}
-          alt="card__headphons"
-        />
+        <img className="card__img" src={image.src} alt={image.alt} />
         <div className="card__descr">
           <h4 className="card__text">{title}</h4>
           <div className="card__rating">

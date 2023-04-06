@@ -13,7 +13,6 @@ function App() {
       <Sellers />
       <Earphones />
       <Launches />
-
       <Footer />
     </div>
   )
