@@ -1,40 +1,37 @@
 import "./card.css";
+import RatingLevel from "../RatingLevel/RatingLevel";
 import {
-  red__star,
   card__headphons__2,
   card__headphons__3,
   card__headphons__4,
   card__headphons__5,
 } from "./img";
 
-function Card(props) {
+import { MainBtn } from "../Buttons";
+
+function Card({ data, openModal }) {
   const {
-    color,
+    color = "",
     discount,
     price = 20,
     rating = 5,
+    reviews,
     title = " Card Text",
     image = { src: card__headphons__5, alt: "card__headphons" },
-  } = props;
+  } = data;
   return (
-    <div className="tab__card card" onClick={() => props.click()}>
+    <div className="tab__card card" onClick={() => openModal(data)}>
       <div className={color ? "card__product " + color : "card__product green"}>
         <img className="card__img" src={image.src} alt={image.alt} />
         <div className="card__descr">
           <h4 className="card__text">{title}</h4>
-          <div className="card__rating">
-            <img src={red__star} alt="rating" />
-            <img src={red__star} alt="rating" />
-            <img src={red__star} alt="rating" />
-            <img src={red__star} alt="rating" />
-            <img src={red__star} alt="rating" />
-            <p className="card__rating-count">75 Reviews</p>
-          </div>
+          <RatingLevel rating={rating} reviews={reviews} />
 
           <p className="card__price">${price}</p>
         </div>
       </div>
-      <button className="card__btn button-card">Add to cart</button>
+      <MainBtn textContent="Add to cart" />
+
       {discount ? (
         <div
           className={

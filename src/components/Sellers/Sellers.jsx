@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import GET_headphons from "../../service/http/GET_headphons";
+
 import "./sellers.css";
-import "../Modal/modal.css";
 import Card from "../Card/Card";
 import Modal from "../Modal/Modal";
 
-function Sellers() {
+function Sellers({ setCountItems }) {
   const [curentTab, setCurentTab] = useState("Wiredless");
   const [showModal, setShowModal] = useState(false);
   const [headphonsList, setHeadphonesList] = useState([]);
+  const [modalData, setModalData] = useState({});
 
   useEffect(() => {
     GET_headphons().then((res) => {
@@ -16,18 +17,22 @@ function Sellers() {
     });
   }, []);
 
-  function openModal() {
+  function openModal(data) {
+    setModalData(data);
     setShowModal(true);
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal() {
+    setShowModal(false);
+    document.body.style.overflow = "auto";
   }
   return (
     <section className="sellers">
       {showModal ? (
         <Modal
-          close={setShowModal}
-          color={"blue"}
-          price={20}
-          rating={5}
-          title={" Card Text"}
+          data={modalData}
+          closeModal={closeModal}
+          setCountItems={setCountItems}
         />
       ) : null}
       <h2 className="sellers__title sellers__title-margin-bt">Top Sellers</h2>
@@ -54,15 +59,14 @@ function Sellers() {
             Wiredless
           </button>
         </div>
-        {curentTab === "Wired" ? <Tabs /> : null}
+        {curentTab === "Wired" ? (
+          <Tabs list={headphonsList} openModal={openModal} />
+        ) : null}
         {curentTab === "Wiredless" ? (
           <div className="tab__card-wrapper">
             <Card
-              click={openModal}
-              color="purp"
-              discount={40}
-              title="Boat Rockerz 323"
-              price={30}
+              openModal={openModal}
+              data={headphonsList[0] !== undefined ? headphonsList[0] : {}}
             />
           </div>
         ) : null}
@@ -71,13 +75,12 @@ function Sellers() {
   );
 }
 
-const Tabs = (list) => {
-  console.log(list);
+const Tabs = ({ list, openModal }) => {
   return (
     <div className="tab__card-wrapper">
-      <Card color="purp" discount={40} title="Boat Rockerz 323" price={30} />
-      <Card color="purp" discount={40} title="Boat Rockerz 323" price={30} />
-      <Card color="purp" discount={40} title="Boat Rockerz 323" price={30} />
+      {list.map((item) => {
+        return <Card key={item.id} data={item} openModal={openModal} />;
+      })}
     </div>
   );
 };

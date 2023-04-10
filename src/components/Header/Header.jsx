@@ -10,7 +10,7 @@ import {
   headphones,
   star,
 } from "./img";
-function Header() {
+function Header({ countItems }) {
   return (
     <section className="header">
       <div className="container ">
@@ -20,7 +20,7 @@ function Header() {
               Shop<span>per</span>
             </h3>
             <SearchInput />
-            <BasketBtn />
+            <BasketBtn countItems={countItems} />
             <LoginBtn />
           </div>
           <ul className="links">
@@ -117,11 +117,11 @@ const SearchInput = (props) => {
   );
 };
 
-const BasketBtn = (props) => {
+const BasketBtn = ({ countItems }) => {
   return (
     <button className="basket rotate-center">
       <img src={basket} alt="basket" />
-      <p className="basket__text">0 Items Added</p>
+      <p className="basket__text">{countItems} Items Added</p>
     </button>
   );
 };

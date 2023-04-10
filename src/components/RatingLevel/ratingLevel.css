@@ -1,0 +1,16 @@
+.rating {
+  display: inline-flex;
+  justify-content: baseline;
+}
+.rating-count {
+  display: inline-flex;
+  color: #888888;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 35px;
+  margin-left: 13px;
+}
+.rating-count_modal {
+  font-size: 20px;
+  line-height: 35px;
+}

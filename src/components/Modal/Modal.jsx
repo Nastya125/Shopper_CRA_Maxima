@@ -1,67 +1,43 @@
 import "./modal.css";
-import red__star from "../Card/img/red__star.svg";
+import Overlay from "../Overlay/Overlay";
+import RatingLevel from "../RatingLevel/RatingLevel";
+import { MainBtn, CloseBtn } from "../Buttons";
 import skeleton from "../Card/img/card__headphons__2.png";
-function Modal(props) {
+function Modal({ data, closeModal, setCountItems }) {
   const {
-    color,
-    discount,
-    price = 20,
-    rating = 5,
-    title = " Card Text",
+    color = "green",
+    price,
+    rating,
+    title,
+    discription,
+    reviews,
     image = { src: skeleton, alt: "headphons" },
-  } = props;
-
+  } = data;
   return (
-    <div className="modal">
-      <button onClick={() => props.close(false)} className="close">
-        x
-      </button>
-      <div className="tab__card card modal">
-        <div
-          className={
-            color ? "card__product_modal " + color : "card__product_modal green"
-          }
-        >
+    <Overlay close={closeModal}>
+      <div className={`${color} modal`}>
+        <CloseBtn close={closeModal} />
+        <div className="modal__content">
           <img
-            className="card__img card__img_modal-size"
             src={image.src}
             alt={image.alt}
+            className="modal__content__img"
           />
-          <div className="card__descr card__descr_modal">
-            <h4 className="card__text">{title}</h4>
-            <div className="card__rating">
-              <img src={red__star} alt="rating" />
-              <img src={red__star} alt="rating" />
-              <img src={red__star} alt="rating" />
-              <img src={red__star} alt="rating" />
-              <img src={red__star} alt="rating" />
-              <p className="card__rating-count">75 Reviews</p>
+          <div>
+            <h2 className="modal__content__title">{title}</h2>
+            <p className="modal__content__text">{discription}</p>
+            <div className="modal__content__rating">
+              <RatingLevel rating={rating} reviews={reviews} isModal={true} />
             </div>
-
-            <p className="card__price">${price}</p>
-            <p className="card__description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Veritatis, repudiandae fuga. Earum officia cumque accusamus
-              accusantium maxime? Soluta laudantium facilis debitis sequi,
-              placeat dignissimos neque nam eius numquam id sunt rem porro
-              maiores.
-            </p>
+            <div className="modal__content__price"> Price: {price}</div>
+            <div className="modal__content__discription"> {discription}</div>
+            <div className="modal__content__btn">
+              <MainBtn onClick={setCountItems} textContent={"Buy now"} />
+            </div>
           </div>
         </div>
-        <button className="card__btn button-card modal-btn">Add to cart</button>
-        {discount ? (
-          <div
-            className={
-              color
-                ? `card__discount card__discount_${color}`
-                : "card__discount"
-            }
-          >
-            <p>Save {discount}%</p>
-          </div>
-        ) : null}
       </div>
-    </div>
+    </Overlay>
   );
 }
 

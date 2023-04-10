@@ -1,6 +1,5 @@
 @import url(./fonts.css);
 @import url(./button.css);
-@import url(./card.css);
 :root {
   --primary: #10b981;
   --primary-hover: #0d89be;
@@ -749,6 +748,9 @@ body {
   margin-left: auto;
   display: flex;
   gap: 40px;
+}
+.w-full {
+  width: 100%;
 }
 
 @media (max-width: 1140px) {
