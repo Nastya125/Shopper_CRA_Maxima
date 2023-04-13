@@ -1,96 +1,84 @@
+import { useEffect, useState } from "react";
+import GET_headphons from "../../service/http/GET_headphons";
+
+import "./earphones.css";
+import Card from "../Card/Card";
+import Modal from "../Modal/Modal";
+import Slider from "../Slider/Slider";
+
 function Earphones() {
+  const [curentTab, setCurentTab] = useState("Wiredless");
+  const [showModal, setShowModal] = useState(false);
+  const [headphonsList, setHeadphonesList] = useState([]);
+  const [modalData, setModalData] = useState({});
+
+  useEffect(() => {
+    GET_headphons().then((res) => {
+      setHeadphonesList(res);
+    });
+  }, []);
+
+  function openModal(data) {
+    setModalData(data);
+    setShowModal(true);
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal() {
+    setShowModal(false);
+    document.body.style.overflow = "auto";
+  }
   return (
-    <section className="earphones">
+    <section className="sellers">
+      {showModal ? <Modal data={modalData} closeModal={closeModal} /> : null}
       <h2 className="sellers__title sellers__title-margin-bt">
         Trending Earphones
       </h2>
-      <div className="tab container">
+      <div className="tab sellers_tab_container ">
         <div className="tab__btn-wrapper">
-          <button className="button-oval">Earbuds</button>
-          <button className="button-oval">Wireless</button>
-          <button className="button-oval">Wired</button>
+          <TabButton
+            curentTab={curentTab}
+            setCurentTab={setCurentTab}
+            textContent={"Wired"}
+          />
+          <TabButton
+            curentTab={curentTab}
+            setCurentTab={setCurentTab}
+            textContent={"Wiredless"}
+          />
         </div>
-        <div className="tab__card-wrapper">
-          <div className="tab__card card">
-            <div className="card__product">
-              <img
-                className="card__img"
-                src="./img/card__headphons__4.png"
-                alt="card__headphons"
-              />
-              <div className="card__descr">
-                <h4 className="card__text">Boat Rockerz 333</h4>
-                <div className="card__rating">
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <p className="card__rating-count">75 Reviews</p>
-                </div>
-
-                <p className="card__price">$20</p>
-              </div>
-            </div>
-            <button className="card__btn button-card">Add to cart</button>
-            <div className="card__discount">
-              <p>Save 60%</p>
-            </div>
-          </div>
-
-          <div className="tab__card card">
-            <div className="card__product card__product_blue">
-              <img
-                className="card__img"
-                src="./img/card__headphons__2.png"
-                alt="card__headphons"
-              />
-              <div className="card__descr">
-                <h4 className="card__text">Boat kerz 234</h4>
-                <div className="card__rating">
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <p className="card__rating-count">75 Reviews</p>
-                </div>
-
-                <p className="card__price">$40</p>
-              </div>
-            </div>
-            <button className="card__btn button-card">Add to cart</button>
-          </div>
-
-          <div className="tab__card card">
-            <div className="card__product card__product_purp">
-              <img
-                className="card__img"
-                src="./img/card__headphons__5.png"
-                alt="card__headphons"
-              />
-              <div className="card__descr">
-                <h4 className="card__text">Boat Rockerz 323</h4>
-                <div className="card__rating">
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <img src="./img/red__star.svg" alt="rating" />
-                  <p className="card__rating-count">75 Reviews</p>
-                </div>
-
-                <p className="card__price">$30</p>
-              </div>
-            </div>
-            <button className="card__btn button-card">Add to cart</button>
-            <div className="card__discount card__discount_purp">
-              <p>Save 40%</p>
-            </div>
-          </div>
-        </div>
+        {curentTab === "Wired" ? (
+          <Tabs list={headphonsList} openModal={openModal} />
+        ) : null}
+        {curentTab === "Wiredless" ? (
+          <Slider data={headphonsList} openModal={openModal} />
+        ) : null}
       </div>
     </section>
   );
 }
+
+const Tabs = ({ list, openModal }) => {
+  return (
+    <div className="tab__card-wrapper">
+      {list.map((item) => {
+        return <Card key={item.id} data={item} openModal={openModal} />;
+      })}
+    </div>
+  );
+};
+const TabButton = ({ curentTab, setCurentTab, textContent }) => {
+  return (
+    <button
+      onClick={() => setCurentTab(textContent)}
+      className={
+        curentTab === textContent
+          ? "button-oval button-oval_active"
+          : "button-oval"
+      }
+    >
+      {textContent}
+    </button>
+  );
+};
+
 export default Earphones;

@@ -1,9 +1,13 @@
+import { useContext } from "react";
 import "./modal.css";
 import Overlay from "../Overlay/Overlay";
 import RatingLevel from "../RatingLevel/RatingLevel";
 import { MainBtn, CloseBtn } from "../Buttons";
 import skeleton from "../Card/img/card__headphons__2.png";
-function Modal({ data, closeModal, setCountItems }) {
+import context from "../../helpers/Context";
+
+function Modal({ data, closeModal }) {
+  const { incrementCountItems } = useContext(context);
   const {
     color = "green",
     price,
@@ -32,7 +36,7 @@ function Modal({ data, closeModal, setCountItems }) {
             <div className="modal__content__price"> Price: {price}</div>
             <div className="modal__content__discription"> {discription}</div>
             <div className="modal__content__btn">
-              <MainBtn onClick={setCountItems} textContent={"Buy now"} />
+              <MainBtn onClick={incrementCountItems} textContent={"Buy now"} />
             </div>
           </div>
         </div>

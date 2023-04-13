@@ -1,5 +1,6 @@
 .card {
   width: 361px;
+  min-width: 361px;
   display: flex;
   flex-direction: column;
   gap: 29px;

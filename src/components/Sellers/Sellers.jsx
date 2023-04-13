@@ -5,7 +5,7 @@ import "./sellers.css";
 import Card from "../Card/Card";
 import Modal from "../Modal/Modal";
 
-function Sellers({ setCountItems }) {
+function Sellers() {
   const [curentTab, setCurentTab] = useState("Wiredless");
   const [showModal, setShowModal] = useState(false);
   const [headphonsList, setHeadphonesList] = useState([]);
@@ -28,13 +28,7 @@ function Sellers({ setCountItems }) {
   }
   return (
     <section className="sellers">
-      {showModal ? (
-        <Modal
-          data={modalData}
-          closeModal={closeModal}
-          setCountItems={setCountItems}
-        />
-      ) : null}
+      {showModal ? <Modal data={modalData} closeModal={closeModal} /> : null}
       <h2 className="sellers__title sellers__title-margin-bt">Top Sellers</h2>
       <div className="tab container">
         <div className="tab__btn-wrapper">

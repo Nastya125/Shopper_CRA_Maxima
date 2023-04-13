@@ -1,0 +1,25 @@
+.slider-btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  height: 64px;
+  min-height: 64px;
+  width: 64px;
+  min-width: 64px;
+  border-radius: 100%;
+  transition: all 0.2s ease-in-out;
+}
+.slider-btn_right {
+}
+.slider-btn_right:hover {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #91bd7b6b;
+  transform: translateX(2px);
+}
+
+.slider-btn_left {
+  transform: rotate(180deg);
+}
+.slider-btn_left:hover {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #91bd7b6b;
+  transform: rotate(180deg), translateX(-2px);
+}
